@@ -122,7 +122,9 @@ const ClassCard = ({ classData }) => {
   return (
     <div className="shadow hover:shadow-lg rounded-md border border-gray-100 relative">
       <div className="divide-y space-y-2 bg-white">
-        <h3 className="text-lg font-semibold pb-3 p-4">{classData?.name}</h3>
+        <h3 className="text-lg font-semibold pb-3 p-4 text-blue-700">
+          {classData?.name}
+        </h3>
         <div className="p-4">
           <p className="text-sm text-gray-600 flex gap-2 items-start pt-1">
             <span className="flex items-center gap-1 font-semibold">

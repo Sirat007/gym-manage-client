@@ -8,6 +8,7 @@ import StaffHero from "./staff-hero";
 
 const HomePage = () => {
   const { data, isLoading } = useProfileQuery();
+  console.log("🚀 ~ HomePage ~ data:", data);
   return (
     <>
       {isLoading ? (
@@ -16,7 +17,7 @@ const HomePage = () => {
         </div>
       ) : (
         <div>
-          {data?.length && data[0]?.user?.user_type == "member" ? (
+          {data?.length && data[0]?.user?.user_type === "member" ? (
             <>
               <Hero />
               <ClassesHome />

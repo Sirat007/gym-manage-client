@@ -76,6 +76,10 @@ const Navbar = () => {
         label: "Profile",
       },
 
+    // {
+    //   key: "profile",
+    //   label: "Profile",
+    // },
     {
       key: "logout",
       label: "Logout",

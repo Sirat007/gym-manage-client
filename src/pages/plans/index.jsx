@@ -194,7 +194,7 @@ const PricingPlansPage = () => {
               key={plan.id}
               className="bg-white rounded-lg shadow-lg p-8 text-center transform transition-all hover:scale-105 hover:shadow-xl"
             >
-              <h2 className="text-2xl font-bold mb-4">
+              <h2 className="text-2xl font-bold mb-4 text-blue-600">
                 {plan?.name?.toUpperCase()}
               </h2>
               <p className="text-4xl font-bold text-blue-600 mb-4">
