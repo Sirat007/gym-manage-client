@@ -14,6 +14,7 @@ import MembersPage from "./pages/members";
 
 function App() {
   const { isLoading, isLoggedIn } = useGetAuthStatus();
+
   if (isLoading) {
     return (
       <div className=" h-screen flex items-center justify-center">

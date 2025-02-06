@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
-import { Form, Input, Button, message } from "antd";
-import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, message, Select } from "antd";
+import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router";
 import {
   useLazyLogoutQuery,
@@ -29,6 +29,7 @@ const SignInPage = () => {
       const userInfo = {
         username: values?.username,
         password: values?.password,
+        user_type: values?.userType,
       };
 
       // Call the register function (assuming it returns a promise)
@@ -60,7 +61,11 @@ const SignInPage = () => {
       }
       console.log("data", data);
       dispatch(
-        setUser({ user: { user_id: data?.user_id }, token: data?.token })
+        setUser({
+          user: { user_id: data?.user_id },
+          token: data?.token,
+          userType: data?.user_type,
+        })
       );
       toast.success("Login successful!");
       navigate("/");
@@ -71,6 +76,8 @@ const SignInPage = () => {
     console.log("Failed:", errorInfo);
     // message.error("Please fill in all fields correctly.");
   };
+
+  const { Option } = Select;
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
@@ -108,6 +115,24 @@ const SignInPage = () => {
               placeholder="Password"
               className="h-12"
             />
+          </Form.Item>
+
+          <Form.Item
+            name="userType"
+            label=""
+            rules={[
+              { required: true, message: "Please select your user type!" },
+            ]}
+          >
+            <Select
+              placeholder="Select User Type"
+              className="h-12"
+              suffixIcon={<UserOutlined className="text-gray-400" />}
+              // disabled
+            >
+              <Option value="member">Member</Option>
+              <Option value="staff">Staff</Option>
+            </Select>
           </Form.Item>
 
           {/* Sign In Button */}

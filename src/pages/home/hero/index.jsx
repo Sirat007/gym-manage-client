@@ -1,15 +1,22 @@
+/* eslint-disable react/prop-types */
 import heroVideo from "../../../assets/video/bg.mp4";
 import Navbar from "../../../components/shared/navbar";
-import { useProfileQuery } from "../../../redux/features/auth/authApi";
+// import useGetAuthStatus from "../../../hooks/useGetAuthStatus";
+// import { useProfileQuery } from "../../../redux/features/auth/authApi";
 
-const Hero = () => {
-  const { data } = useProfileQuery();
+const Hero = ({ isLoggedIn, userTypeInfo, isLoading }) => {
+  // const { data } = useProfileQuery();
+  // const { userTypeInfo } = useGetAuthStatus();
   return (
     <>
-      {data?.length && data[0]?.user?.user_type === "member" ? (
+      {userTypeInfo === "member" ? (
         <div className="relative w-full snap-section min-h-screen">
           <div className=" max-w-7xl mx-auto">
-            <Navbar />
+            <Navbar
+              isLoading={isLoading}
+              isLoggedIn={isLoggedIn}
+              userTypeInfo={userTypeInfo}
+            />
           </div>
           {/* Video background */}
           <video

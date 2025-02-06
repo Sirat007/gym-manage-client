@@ -16,6 +16,7 @@ import {
   useAddPlanMutation,
   useUpdatePlanMutation,
   useDeletePlanMutation,
+  useAddPlanBookingMutation,
 } from "../../redux/features/plans/planApi";
 import {
   useEditProfileMutation,
@@ -40,7 +41,9 @@ const PricingPlansPage = () => {
   } = useGetPlanListQuery();
 
   const { data: profileData } = useProfileQuery();
+  console.log("🚀 ~ PricingPlansPage ~ profileData:", profileData);
   const [newPlanId, setNewPlanID] = useState(null);
+  const { userTypeInfo } = useGetAuthStatus();
 
   const { isLoggedIn } = useGetAuthStatus();
   // const user = useSelector(selectCurrentUser);
@@ -178,8 +181,7 @@ const PricingPlansPage = () => {
         </div>
 
         {/* Add Plan Button (Visible to Admins) */}
-        {profileData?.length &&
-        profileData[0]?.user?.user_type === "member" ? null : (
+        {userTypeInfo === "member" ? null : (
           <div className="mb-4 flex justify-end">
             <Button type="primary" onClick={() => setIsAddDrawerVisible(true)}>
               Add Plan
@@ -194,7 +196,7 @@ const PricingPlansPage = () => {
               key={plan.id}
               className="bg-white rounded-lg shadow-lg p-8 text-center transform transition-all hover:scale-105 hover:shadow-xl"
             >
-              <h2 className="text-2xl font-bold mb-4">
+              <h2 className="text-2xl font-bold mb-4 text-blue-600">
                 {plan?.name?.toUpperCase()}
               </h2>
               <p className="text-4xl font-bold text-blue-600 mb-4">
@@ -203,8 +205,7 @@ const PricingPlansPage = () => {
               <p className="text-gray-600 mb-6">{plan.description}</p>
 
               {/* Buttons for Members */}
-              {profileData?.length &&
-              profileData[0]?.user?.user_type === "member" ? (
+              {userTypeInfo === "member" ? (
                 <Button
                   type={
                     profileData[0]?.plan === plan?.id ? "dashed" : "primary"

@@ -28,6 +28,13 @@ const classApi = baseApi.injectEndpoints({
         body: planInfo,
       }),
     }),
+    addPlanBooking: builder.mutation({
+      query: (planInfo) => ({
+        url: "/planadd/",
+        method: "POST",
+        body: planInfo,
+      }),
+    }),
     updatePlan: builder.mutation({
       query: ({ planInfo, id }) => ({
         url: `/planedit/${id}`,
@@ -52,4 +59,5 @@ export const {
   useAddPlanMutation,
   useUpdatePlanMutation,
   useDeletePlanMutation,
+  useAddPlanBookingMutation,
 } = classApi;

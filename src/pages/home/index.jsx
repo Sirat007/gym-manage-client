@@ -5,20 +5,28 @@ import ContactUs from "./contact-us";
 import Hero from "./hero";
 import WhyChooseUs from "./why-us";
 import StaffHero from "./staff-hero";
+import useGetAuthStatus from "../../hooks/useGetAuthStatus";
 
 const HomePage = () => {
-  const { data, isLoading } = useProfileQuery();
+  const { data, isLoading: profileLoading } = useProfileQuery();
+  const { userTypeInfo: userType, isLoading, isLoggedIn } = useGetAuthStatus();
+  console.log("🚀 ~ HomePage ~ userType:", userType);
+  console.log("🚀 ~ HomePage ~ data:", data);
   return (
     <>
-      {isLoading ? (
+      {isLoading || profileLoading ? (
         <div className=" h-screen flex items-center justify-center">
           <Spin size="large" />
         </div>
       ) : (
         <div>
-          {data?.length && data[0]?.user?.user_type == "member" ? (
+          {userType === "member" ? (
             <>
-              <Hero />
+              <Hero
+                userTypeInfo={userType}
+                isLoading={isLoading}
+                isLoggedIn={isLoggedIn}
+              />
               <ClassesHome />
               <ContactUs />
               <WhyChooseUs />

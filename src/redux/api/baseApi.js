@@ -37,7 +37,7 @@ const baseQueryWithErrorHandling = async (args, api, extraOptions) => {
       toast.error("Resource not found.");
     } else {
       // Generic error message
-      toast.error("An error occurred. Please try again.");
+      // toast.error("An error occurred. Please try again.");
     }
   }
 

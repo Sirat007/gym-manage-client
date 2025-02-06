@@ -99,10 +99,13 @@ import { useProfileQuery } from "../../redux/features/auth/authApi";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
+import useGetAuthStatus from "../../hooks/useGetAuthStatus";
 
 const ClassesPage = () => {
   const { data, isLoading, isError, isSuccess } = useGetClassListQuery();
   console.log("🚀 ~ ClassesHome ~ data:", data);
+
+  const { userTypeInfo } = useGetAuthStatus();
 
   const [open, setOpen] = useState(false);
 
@@ -199,7 +202,7 @@ const ClassesPage = () => {
   } else if (!isLoading && isError) {
     content = (
       <div className=" w-full">
-        {profile?.length && profile[0]?.user?.user_type === "member" ? (
+        {userTypeInfo === "member" ? (
           <div
             className=" mb-4 rounded-md h-[30vh]"
             style={{
@@ -216,7 +219,7 @@ const ClassesPage = () => {
 
         <div>
           <h6 className=" text-2xl font-semibold">
-            {profile?.length && profile[0]?.user?.user_type === "member"
+            {userTypeInfo === "member"
               ? "Explore Our Fitness Classes"
               : "Class List"}
           </h6>
@@ -236,7 +239,7 @@ const ClassesPage = () => {
   } else if (isSuccess && !data?.length) {
     content = (
       <div className=" w-full">
-        {profile?.length && profile[0]?.user?.user_type === "member" ? (
+        {userTypeInfo === "member" ? (
           <div
             className=" mb-4 rounded-md h-[30vh]"
             style={{
@@ -253,7 +256,7 @@ const ClassesPage = () => {
 
         <div>
           <h6 className=" text-2xl font-semibold">
-            {profile?.length && profile[0]?.user?.user_type === "member"
+            {userTypeInfo === "member"
               ? "Explore Our Fitness Classes"
               : "Class List"}
           </h6>
@@ -274,12 +277,10 @@ for Everyone
     content = (
       <div
         className={`w-full min-h-screen ${
-          profile?.length && profile[0]?.user?.user_type === "member"
-            ? "pt-0"
-            : "pt-10"
+          userTypeInfo === "member" ? "pt-0" : "pt-10"
         }`}
       >
-        {profile?.length && profile[0]?.user?.user_type === "member" ? (
+        {userTypeInfo === "member" ? (
           <div
             className=" mb-4 rounded-md h-[30vh]"
             style={{
@@ -296,7 +297,7 @@ for Everyone
 
         <div>
           <h6 className=" text-2xl font-semibold">
-            {profile?.length && profile[0]?.user?.user_type === "member"
+            {userTypeInfo === "member"
               ? "Explore Our Fitness Classes"
               : "Class List"}
           </h6>
@@ -306,8 +307,7 @@ for Everyone
     for Everyone
 
   </p> */}
-          {profile?.length &&
-          profile[0]?.user?.user_type === "member" ? null : (
+          {userTypeInfo === "member" ? null : (
             <div className=" flex justify-end">
               <Button
                 loading={addLoading}

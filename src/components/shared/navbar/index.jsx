@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router";
 import {
@@ -11,7 +12,7 @@ import {
 import { Menu, Dropdown, Avatar, Drawer } from "antd";
 import Logo from "../../logo";
 import { List } from "lucide-react";
-import useGetAuthStatus from "../../../hooks/useGetAuthStatus";
+// import useGetAuthStatus from "../../../hooks/useGetAuthStatus";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/features/auth/authSlice";
 import {
@@ -20,9 +21,9 @@ import {
 } from "../../../redux/features/auth/authApi";
 import { toast } from "react-toastify";
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn, userTypeInfo, isLoading }) => {
   const { data } = useProfileQuery();
-  const { isLoggedIn } = useGetAuthStatus();
+  // const { isLoggedIn, userTypeInfo, isLoading } = useGetAuthStatus();
   const items = [
     {
       label: "Home",
@@ -42,7 +43,7 @@ const Navbar = () => {
       icon: <DollarCircleFilled />,
       path: "/plans",
     },
-    data?.length && data[0]?.user?.user_type === "member"
+    userTypeInfo === "member"
       ? {
           label: "About",
           key: "about",
@@ -55,7 +56,7 @@ const Navbar = () => {
           icon: <UserOutlined />,
           path: "/members",
         },
-    !isLoggedIn
+    !isLoggedIn && !isLoading
       ? {
           label: "Sign In",
           key: "signin",
@@ -70,12 +71,15 @@ const Navbar = () => {
     //   key: "dashboard",
     //   label: "Dashboard",
     // },
-    data?.length &&
-      data[0]?.user?.user_type === "member" && {
-        key: "profile",
-        label: "Profile",
-      },
+    userTypeInfo === "member" && {
+      key: "profile",
+      label: "Profile",
+    },
 
+    // {
+    //   key: "profile",
+    //   label: "Profile",
+    // },
     {
       key: "logout",
       label: "Logout",

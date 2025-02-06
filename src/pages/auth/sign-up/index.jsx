@@ -35,6 +35,7 @@ const SignUpPage = () => {
         password: values?.password,
         confirm_password: values?.confirmPassword,
         user_type: values?.userType,
+        // plan: 1,
       };
 
       // Call the register function (assuming it returns a promise)

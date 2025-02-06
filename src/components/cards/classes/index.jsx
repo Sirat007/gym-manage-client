@@ -13,12 +13,14 @@ import {
   useEditClassMutation,
 } from "../../../redux/features/classes/classApi";
 import { toast } from "react-toastify";
+import useGetAuthStatus from "../../../hooks/useGetAuthStatus";
 
 /* eslint-disable react/prop-types */
 const ClassCard = ({ classData }) => {
   const navigate = useNavigate();
   const formattedSchedule = new Date(classData?.schedule).toLocaleString();
   const { data: profile } = useProfileQuery();
+  const { userTypeInfo } = useGetAuthStatus();
 
   // State for edit drawer visibility
   const [isEditDrawerVisible, setIsEditDrawerVisible] = useState(false);
@@ -122,7 +124,9 @@ const ClassCard = ({ classData }) => {
   return (
     <div className="shadow hover:shadow-lg rounded-md border border-gray-100 relative">
       <div className="divide-y space-y-2 bg-white">
-        <h3 className="text-lg font-semibold pb-3 p-4">{classData?.name}</h3>
+        <h3 className="text-lg font-semibold pb-3 p-4 text-blue-700">
+          {classData?.name}
+        </h3>
         <div className="p-4">
           <p className="text-sm text-gray-600 flex gap-2 items-start pt-1">
             <span className="flex items-center gap-1 font-semibold">
@@ -150,7 +154,7 @@ const ClassCard = ({ classData }) => {
       </div>
 
       {/* Conditionally render edit and delete icons for non-members */}
-      {profile?.length && profile[0]?.user?.user_type === "member" ? null : (
+      {userTypeInfo === "member" ? null : (
         <div className="absolute top-2 right-2 flex gap-2">
           <Button
             type="text"

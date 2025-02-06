@@ -63,6 +63,14 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["profile"],
     }),
+    registerProfile: builder.mutation({
+      query: (userInfo) => ({
+        url: "/profile/",
+        method: "POST",
+        body: userInfo,
+      }),
+      invalidatesTags: ["profile"],
+    }),
     editProfile: builder.mutation({
       query: ({ userInfo, id }) => ({
         url: `/profile/${id}/`,
@@ -84,4 +92,5 @@ export const {
   useLazyLogoutQuery,
   useMmeberListQuery,
   useDeleteMemberMutation,
+  useRegisterProfileMutation,
 } = authApi;

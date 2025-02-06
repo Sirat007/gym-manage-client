@@ -16,7 +16,11 @@ import {
 
 const ClassDetailsPage = () => {
   const { id } = useParams();
-  const { isLoading: isAuthLoading, isLoggedIn } = useGetAuthStatus();
+  const {
+    isLoading: isAuthLoading,
+    isLoggedIn,
+    userTypeInfo,
+  } = useGetAuthStatus();
   const navigate = useNavigate();
   const {
     data: classData,
@@ -66,8 +70,20 @@ const ClassDetailsPage = () => {
   const { data: bookingList } = useBookingListQuery();
 
   const getSelectedBookinStatus = async (id) => {
-    const booking = await classData?.find((c) => c?.fitness_class === id);
-    return booking ? true : false;
+    console.log("🚀 ~ getSelectedBookinStatus ~ id:", id);
+    console.log("🚀 ~ getSelectedBookinStatus ~ bookingList:", bookingList);
+
+    // Ensure bookingList is defined and an array
+    if (!Array.isArray(bookingList)) {
+      console.error("🚀 ~ bookingList is not an array or is undefined");
+      return false;
+    }
+
+    // Use strict equality for comparison
+    const booking = bookingList.find((c) => c?.fitness_class === id);
+
+    console.log("🚀 ~ getSelectedBookinStatus ~ booking:", booking);
+    return Boolean(booking); // Equivalent to `booking ? true : false`
   };
 
   // Display a loading spinner while data is being fetched
@@ -144,16 +160,17 @@ const ClassDetailsPage = () => {
             <p className="text-gray-700 mb-4">
               By: <span className="font-bold">{classData?.instructor}</span>
             </p>
-            {profile?.length && profile[0]?.user?.user_type === "member" ? (
+            {userTypeInfo === "member" ? (
               <Button
                 loading={isAddBookingLoading}
                 onClick={handleBookNow}
                 type="primary"
                 block
                 size="large"
-                disabled={getSelectedBookinStatus(classData?.id)}
+                // disabled={getSelectedBookinStatus(id)}
               >
-                {getSelectedBookinStatus(classData?.id) ? "Booked" : "Book Now"}
+                {/* {getSelectedBookinStatus(id) ? "Booked" : "Book Now"} */}
+                Book Now
               </Button>
             ) : null}
           </Card>
